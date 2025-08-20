@@ -28,7 +28,7 @@ group :development, :test do
   # --- Testing ---
   gem 'factory_bot_rails', '~> 6.5'       # Factories for test data
   gem 'faker', '~> 3.5'                   # Fake data generator
-  gem 'rspec-rails', '~> 7.1', '>= 7.1.1' # RSpec test framework
+  gem 'rspec-rails', '~> 8.0' # RSpec test framework
   gem 'shoulda-matchers', '~> 6.5'        # Extra matchers for RSpec
   gem 'simplecov', '~> 0.22.0', require: false # Code coverage
 end
