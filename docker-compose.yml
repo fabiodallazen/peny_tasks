@@ -1,0 +1,39 @@
+version: "3.9"
+
+services:
+  web:
+    build: .
+    command: bin/dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/rails
+      - tmp_data:/rails/tmp
+      - log_data:/rails/log
+      - public_data:/rails/public
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgresql://peny:secret@db:5432/peny_tasks_development
+      - RAILS_ENV=development
+    stdin_open: true
+    tty: true
+    entrypoint: ["sh", "/rails/entrypoint.sh"]
+
+  db:
+    image: postgres:17.6
+    environment:
+      POSTGRES_USER: peny
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: peny_tasks_development
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+#    restart: unless-stopped
+
+volumes:
+  db_data:
+  tmp_data:
+  log_data:
+  public_data:
