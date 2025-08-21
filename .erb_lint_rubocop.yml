@@ -17,3 +17,12 @@ Lint/UselessAssignment:
 
 Style/FrozenStringLiteralComment:
   Enabled: false
+
+Style/StringLiterals:
+  Enabled: false
+
+Layout/LineLength:
+  Enabled: true
+  Max: 120
+  Exclude:
+    - 'app/views/kaminari/*'
