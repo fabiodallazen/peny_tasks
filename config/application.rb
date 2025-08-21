@@ -1,12 +1,14 @@
 # frozen_string_literal: true
 
 require_relative 'boot'
-
 require 'rails/all'
+require 'dotenv'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
+
+Dotenv.load(".env.#{ENV.fetch('RAILS_ENV', nil)}", '.env')
 
 module PenyTasks
   class Application < Rails::Application
