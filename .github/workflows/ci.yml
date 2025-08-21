@@ -56,6 +56,22 @@ jobs:
       - name: Lint ERB views
         run: bundle exec erblint app/views
 
+  # --- JavaScript Security Scan (Importmap) ---
+  scan_js:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: .ruby-version
+          bundler-cache: true
+
+      - name: Scan JS dependencies for vulnerabilities (Importmap)
+        run: bin/importmap audit
+
   # --- Code Linting: JS (ESLint + Prettier) ---
   lint_js:
     runs-on: ubuntu-latest
