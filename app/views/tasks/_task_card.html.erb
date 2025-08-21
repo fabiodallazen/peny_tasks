@@ -1,0 +1,41 @@
+<%= turbo_frame_tag dom_id(task) do %>
+  <div class="card mb-3 <%= 'border-success bg-light' if task.status == 'completed' %>"
+       data-controller="task">
+    <div class="card-body">
+      <div class="d-flex justify-content-between align-items-start">
+        <h5 class="card-title mb-1"><%= task.title %></h5>
+        <span class="badge <%= task.status == 'completed' ? 'bg-success' : 'bg-secondary' %>">
+          <%= task.status.capitalize %>
+        </span>
+      </div>
+
+      <% if task.description.present? %>
+        <p class="card-text text-body-secondary mt-2">
+          <%= truncate(task.description, length: 120) %>
+        </p>
+      <% end %>
+
+      <div class="d-flex gap-2 mt-2">
+        <%= button_to(
+              (task.status == 'completed' ? 'Mark Pending' : 'Complete'),
+              update_status_task_path(task, status: (task.status == 'completed' ? 'pending' : 'completed')),
+              method: :patch,
+              form: {
+                data: {
+                  turbo_frame: dom_id(task),
+                  action: "turbo:submit-start->task#submitStart turbo:submit-end->task#submitEnd"
+                }
+              },
+              class: "btn btn-sm #{task.status == 'completed' ? 'btn-outline-secondary' : 'btn-primary'}"
+            ) %>
+
+        <%= link_to "Edit", edit_task_path(task), class: "btn btn-sm btn-outline-primary" %>
+
+        <%= link_to "Delete",
+                    task_path(task),
+                    data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },
+                    class: "btn btn-sm btn-outline-danger" %>
+      </div>
+    </div>
+  </div>
+<% end %>
