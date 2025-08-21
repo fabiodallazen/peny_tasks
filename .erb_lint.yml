@@ -1,0 +1,26 @@
+glob: "**/*.{html,text,js}{+*,}.erb"
+exclude:
+  - '**/vendor/**/*'
+  - '**/node_modules/**/*'
+linters:
+  ErbSafety:
+    enabled: true
+  FinalNewline:
+    enabled: true
+  SpaceAroundErbTag:
+    enabled: true
+  ErbBestPractices:
+    enabled: true
+  HtmlBestPractices:
+    enabled: true
+  PartialInstanceVariable:
+    enabled: true
+  DeprecatedClasses:
+    enabled: true
+  RequireScriptNonce:
+    enabled: true
+  Rubocop:
+    enabled: true
+    rubocop_config:
+      inherit_from:
+        - .erb_lint_rubocop.yml

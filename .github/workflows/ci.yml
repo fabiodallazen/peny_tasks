@@ -22,24 +22,8 @@ jobs:
       - name: Scan for Rails security vulnerabilities
         run: bin/brakeman --no-pager
 
-  # --- JavaScript Security Scan (Importmap) ---
-  scan_js:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: .ruby-version
-          bundler-cache: true
-
-      - name: Scan JS dependencies for vulnerabilities
-        run: bin/importmap audit
-
-  # --- Code Linting ---
-  lint:
+  # --- Code Linting: Ruby ---
+  lint_ruby:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -53,6 +37,41 @@ jobs:
 
       - name: Lint Ruby code with RuboCop
         run: bin/rubocop -f github
+
+  # --- Code Linting: ERB ---
+  lint_erb:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: .ruby-version
+          bundler-cache: true
+
+      - name: Install gems
+        run: bundle install --jobs 4 --retry 3
+
+      - name: Lint ERB views
+        run: bundle exec erblint app/views
+
+  # --- Code Linting: JS (ESLint + Prettier) ---
+  lint_js:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.3.0
+
+      - name: Install Node dependencies
+        run: npm install
+
+      - name: Run JS Linter
+        run: npm run lint
 
   # --- Tests ---
   test:

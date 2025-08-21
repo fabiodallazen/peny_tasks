@@ -1,0 +1,19 @@
+plugins:
+  - rubocop-rails
+  - rubocop-rspec
+
+AllCops:
+  TargetRubyVersion: 3.4.5
+  NewCops: enable
+
+Layout/TrailingEmptyLines:
+  Enabled: false
+
+Layout/InitialIndentation:
+  Enabled: false
+
+Lint/UselessAssignment:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
