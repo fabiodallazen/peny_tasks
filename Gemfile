@@ -6,6 +6,7 @@ ruby '3.4.5' # Adjust to match the Ruby version in your Docker setup
 
 # --- Core dependencies ---
 gem 'bootsnap', '~> 1.18', '>= 1.18.6', require: false # Faster boot time
+gem 'kaminari', '~> 1.2', '>= 1.2.2' # Pagination
 gem 'pg', '~> 1.6', '>= 1.6.1' # PostgreSQL adapter
 gem 'puma', '~> 6.6', '>= 6.6.1' # Web server
 gem 'rails', '~> 7.2', '>= 7.2.2.2' # Rails framework
