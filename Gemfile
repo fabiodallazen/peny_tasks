@@ -8,7 +8,7 @@ ruby '3.4.5' # Adjust to match the Ruby version in your Docker setup
 gem 'bootsnap', '~> 1.18', '>= 1.18.6', require: false # Faster boot time
 gem 'pg', '~> 1.6', '>= 1.6.1' # PostgreSQL adapter
 gem 'puma', '~> 6.6', '>= 6.6.1' # Web server
-gem 'rails', '~> 7.2', '>= 7.2.2.2' # Rails framework
+gem 'rails', '~> 8.0' # Rails framework
 
 # --- Frontend / Hotwire ---
 gem 'importmap-rails', '~> 2.2', '>= 2.2.2' # Importmap for JS
