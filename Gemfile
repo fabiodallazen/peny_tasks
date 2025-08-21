@@ -13,6 +13,7 @@ gem 'rails', '~> 7.2', '>= 7.2.2.2' # Rails framework
 
 # --- Frontend / Hotwire ---
 gem 'importmap-rails', '~> 2.2', '>= 2.2.2' # Importmap for JS
+gem 'propshaft', '~> 1.2', '>= 1.2.1'       # Propshaft for CSS
 gem 'stimulus-rails', '~> 1.3', '>= 1.3.4'  # Stimulus controllers
 gem 'turbo-rails', '~> 2.0', '>= 2.0.16'    # Turbo Drive + Turbo Frames
 
