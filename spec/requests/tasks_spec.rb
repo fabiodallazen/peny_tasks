@@ -103,37 +103,36 @@ RSpec.describe 'Tasks', type: :request do
     end
   end
 
+  # --------------------------
+  # Shared example: update_status
+  # --------------------------
+  shared_examples 'status update' do |format, status_param, expected_status, success:, flash_key: nil|
+    it "#{success ? 'updates' : 'does not update'} status via #{format}" do
+      patch update_status_task_path(task, format: format), params: { status: status_param }
+      task.reload
+      expect(task.status).to eq(expected_status)
+
+      if format == :html
+        follow_redirect!
+        expect(response.body).to include(I18n.t(flash_key)) if flash_key
+      else
+        expect(response.media_type).to eq('text/vnd.turbo-stream.html') if success
+        expect(response).to have_http_status(:unprocessable_entity) unless success
+      end
+    end
+  end
+
   describe 'PATCH /tasks/:id/update_status' do
     context 'with permitted status' do
-      it 'updates status via HTML' do
-        patch update_status_task_path(task), params: { status: 'completed' }
-        expect(task.reload.status).to eq('completed')
-        expect(response).to redirect_to(tasks_path)
-        follow_redirect!
-        expect(response.body).to include(I18n.t('notices.task.status_updated'))
-      end
-
-      it 'updates status via Turbo Stream' do
-        patch update_status_task_path(task, format: :turbo_stream), params: { status: 'completed' }
-        expect(task.reload.status).to eq('completed')
-        expect(response.media_type).to eq('text/vnd.turbo-stream.html')
-      end
+      it_behaves_like 'status update', :html, 'completed', 'completed', success: true,
+        flash_key: 'notices.task.status_updated'
+      it_behaves_like 'status update', :turbo_stream, 'completed', 'completed', success: true
     end
 
     context 'with not permitted status' do
-      it 'does not update status via HTML' do
-        patch update_status_task_path(task), params: { status: 'archived' }
-        expect(task.reload.status).to eq('pending')
-        expect(response).to redirect_to(tasks_path)
-        follow_redirect!
-        expect(response.body).to include(I18n.t('notices.task.invalid_status'))
-      end
-
-      it 'does not update status via Turbo Stream' do
-        patch update_status_task_path(task, format: :turbo_stream), params: { status: 'archived' }
-        expect(task.reload.status).to eq('pending')
-        expect(response).to have_http_status(:unprocessable_entity)
-      end
+      it_behaves_like 'status update', :html, 'archived', 'pending', success: false,
+        flash_key: 'notices.task.invalid_status'
+      it_behaves_like 'status update', :turbo_stream, 'archived', 'pending', success: false
     end
   end
 end
