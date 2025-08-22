@@ -8,14 +8,10 @@ ruby '3.4.5' # Adjust to match the Ruby version in your Docker setup
 gem 'bootsnap', '~> 1.18', '>= 1.18.6', require: false # Faster boot time
 gem 'kaminari', '~> 1.2', '>= 1.2.2' # Pagination
 gem 'pg', '~> 1.6', '>= 1.6.1' # PostgreSQL adapter
+gem 'propshaft', '~> 1.2', '>= 1.2.1' # Propshaft for CSS
 gem 'puma', '~> 6.6', '>= 6.6.1' # Web server
 gem 'rails', '~> 7.2', '>= 7.2.2.2' # Rails framework
-
-# --- Frontend / Hotwire ---
-gem 'importmap-rails', '~> 2.2', '>= 2.2.2' # Importmap for JS
-gem 'propshaft', '~> 1.2', '>= 1.2.1'       # Propshaft for CSS
-gem 'stimulus-rails', '~> 1.3', '>= 1.3.4'  # Stimulus controllers
-gem 'turbo-rails', '~> 2.0', '>= 2.0.16'    # Turbo Drive + Turbo Frames
+gem 'turbo-rails', '~> 2.0', '>= 2.0.16' # Turbo Drive + Turbo Frames
 
 group :development, :test do
   gem 'debug', platforms: %i[mri windows], require: 'debug/prelude' # Debugging tool

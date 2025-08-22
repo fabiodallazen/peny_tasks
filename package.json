@@ -9,7 +9,9 @@
   },
   "scripts": {
     "lint": "eslint app/javascript --ext .js",
-    "lint:fix": "eslint app/javascript --ext .js --fix"
+    "lint:fix": "eslint app/javascript --ext .js --fix",
+    "build": "esbuild app/javascript/application.js --bundle --outdir=app/assets/builds --sourcemap --format=esm",
+    "build:watch": "esbuild app/javascript/application.js --bundle --outdir=app/assets/builds --sourcemap --watch --format=esm"
   },
   "repository": {
     "type": "git",
@@ -24,9 +26,14 @@
   },
   "homepage": "https://github.com/fabiodallazen/peny_tasks#readme",
   "devDependencies": {
+    "esbuild": "^0.25.9",
     "eslint": "^8.57.1",
     "eslint-config-standard": "^17.1.0",
     "eslint-plugin-import": "^2.32.0",
     "prettier": "^3.6.2"
+  },
+  "dependencies": {
+    "@hotwired/stimulus": "^3.2.2",
+    "@hotwired/turbo": "^8.0.13"
   }
 }
