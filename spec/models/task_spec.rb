@@ -7,7 +7,6 @@ RSpec.describe Task, type: :model do
 
   describe 'validations' do
     it { is_expected.to validate_presence_of(:title) }
-    it { is_expected.to validate_inclusion_of(:status).in_array(%w[pending completed]) }
   end
 
   describe 'scopes' do

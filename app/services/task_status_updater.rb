@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# app/services/task_status_updater.rb
 class TaskStatusUpdater
   PERMITTED = %w[pending completed].freeze
 
