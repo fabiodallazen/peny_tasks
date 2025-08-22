@@ -10,22 +10,19 @@
         <div class="btn-group" role="group" aria-label="Status filter">
           <%= link_to "All",
                       tasks_path(q: params[:q]),
-                      class: "btn btn-outline-secondary #{'active' if params[:status].blank?}",
-                      data: { turbo_frame: "tasks" } %>
+                      class: "btn btn-outline-secondary #{'active' if params[:status].blank?}" %>
           <%= link_to "Pending",
                       tasks_path(status: "pending", q: params[:q]),
-                      class: "btn btn-outline-secondary #{'active' if params[:status] == 'pending'}",
-                      data: { turbo_frame: "tasks" } %>
+                      class: "btn btn-outline-secondary #{'active' if params[:status] == 'pending'}" %>
           <%= link_to "Completed",
                       tasks_path(status: "completed", q: params[:q]),
-                      class: "btn btn-outline-secondary #{'active' if params[:status] == 'completed'}",
-                      data: { turbo_frame: "tasks" } %>
+                      class: "btn btn-outline-secondary #{'active' if params[:status] == 'completed'}" %>
         </div>
 
-        <%= form_with url: tasks_path, method: :get, html: { class: "ms-md-auto" }, data: { turbo_frame: "tasks" } do |f| %>
+        <%= form_with url: tasks_path, method: :get, html: { class: "ms-md-auto" } do |f| %>
           <div class="input-group">
             <%= hidden_field_tag :status, params[:status] if params[:status].present? %>
-            <%= f.text_field :q, value: params[:q], class: "form-control", placeholder: "Search title or description…" %>
+            <%= f.text_field :q, value: params[:q], class: "form-control", placeholder: "Search title or description..." %>
             <button class="btn btn-outline-primary" type="submit">Search</button>
           </div>
         <% end %>
@@ -33,17 +30,25 @@
     </div>
   </div>
 
-  <turbo-frame id="tasks">
-    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
-      <% @tasks.each do |task| %>
-        <div class="col">
-          <%= render partial: "tasks/task_card", locals: { task: task } %>
-        </div>
-      <% end %>
-    </div>
+  <!-- tabela -->
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      <th>Title</th>
+      <th>Status</th>
+      <th class="text-end">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @tasks.each do |task| %>
+      <%= render "task_row", task: task %>
+    <% end %>
+    </tbody>
+  </table>
 
-    <div class="d-flex justify-content-center mt-3">
-      <%= paginate @tasks, params: { status: params[:status], q: params[:q] } %>
-    </div>
-  </turbo-frame>
+  <div class="d-flex justify-content-center mt-3">
+    <%= paginate @tasks %>
+  </div>
 </div>
+
+<turbo-frame id="modal"></turbo-frame>

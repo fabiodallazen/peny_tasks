@@ -38,7 +38,15 @@ class TasksController < ApplicationController
 
   def update_status
     success = TaskStatusUpdater.new(@task, params[:status]).call
-    handle_status_update_response(success)
+    respond_to do |format|
+      if success
+        format.turbo_stream
+        format.html { redirect_to tasks_path, notice: t('notices.task.status_updated') }
+      else
+        format.turbo_stream { head :unprocessable_entity }
+        format.html { redirect_to tasks_path, alert: t('notices.task.invalid_status') }
+      end
+    end
   end
 
   private
@@ -49,17 +57,5 @@ class TasksController < ApplicationController
 
   def task_params
     params.require(:task).permit(:title, :description, :status)
-  end
-
-  def handle_status_update_response(success)
-    respond_to do |format|
-      if success
-        format.turbo_stream
-        format.html { redirect_to tasks_path, notice: t('notices.task.status_updated') }
-      else
-        format.turbo_stream { head :unprocessable_entity }
-        format.html { redirect_to tasks_path, alert: t('notices.task.invalid_status') }
-      end
-    end
   end
 end

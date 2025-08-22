@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Task < ApplicationRecord
+  enum :status, { pending: 'pending', completed: 'completed' }
+
   validates :title, presence: true
   validates :status, inclusion: { in: %w[pending completed] }
 
