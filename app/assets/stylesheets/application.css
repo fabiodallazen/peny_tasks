@@ -10,14 +10,14 @@ body {
     border-radius: 999px;
 }
 
-.badge-completed {
-    background-color: #157347;
-    color: #fff;
+.badge-pending {
+    background-color: #6f42c1 !important;
+    color: #fff !important;
 }
 
-.badge-pending {
-    background-color: #5a2d91;
-    color: #fff;
+.badge-completed {
+    background-color: #198754 !important;
+    color: #fff !important;
 }
 
 table tbody tr:nth-child(even) {

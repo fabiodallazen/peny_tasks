@@ -2,18 +2,23 @@
   <td><%= task.title %></td>
   <td>
     <div class="dropdown">
-      <a class="badge-status <%= task.status == 'completed' ? 'badge-completed' : 'badge-pending' %> dropdown-toggle text-decoration-none"
+      <a class="badge <%= task.status == 'completed' ? 'badge-completed' : 'badge-pending' %> dropdown-toggle text-decoration-none"
          href="#"
          role="button"
          id="dropdownStatus<%= task.id %>"
          data-bs-toggle="dropdown"
          aria-expanded="false">
-        <%= task.status.capitalize %>
+
+        <% if task.status == 'completed' %>
+          <i class="bi bi-check-circle-fill me-1"></i> Completed
+        <% else %>
+          <i class="bi bi-hourglass-split me-1"></i> Pending
+        <% end %>
       </a>
-      <ul class="dropdown-menu dropdown-menu-end shadow-sm rounded-3" aria-labelledby="dropdownStatus<%= task.id %>">
+      <ul class="dropdown-menu" aria-labelledby="dropdownStatus<%= task.id %>">
         <% if task.status == 'pending' %>
           <li>
-            <%= link_to "✅ Mark as Completed",
+            <%= link_to "Mark as Completed",
                         update_status_task_path(task, status: 'completed'),
                         method: :patch,
                         data: { turbo_frame: dom_id(task) },
@@ -21,7 +26,7 @@
           </li>
         <% else %>
           <li>
-            <%= link_to "🔄 Reopen Task",
+            <%= link_to "Reopen Task",
                         update_status_task_path(task, status: 'pending'),
                         method: :patch,
                         data: { turbo_frame: dom_id(task) },
@@ -32,10 +37,15 @@
     </div>
   </td>
   <td class="d-flex justify-content-end gap-2">
-    <%= link_to "Edit", edit_task_path(task), class: "btn btn-sm btn-outline-primary" %>
-    <%= link_to "Delete", task_path(task),
+    <%= link_to edit_task_path(task), class: "btn btn-sm btn-outline-secondary", title: "Edit" do %>
+      <i class="bi bi-pencil"></i>
+    <% end %>
+    <%= link_to task_path(task),
                 method: :delete,
-                data: { confirm: "Are you sure you want to delete this record?" },
-                class: "btn btn-sm btn-outline-danger" %>
+                data: { confirm: "Are you sure you want to delete this task?" },
+                class: "btn btn-sm btn-outline-danger",
+                title: "Delete" do %>
+      <i class="bi bi-trash"></i>
+    <% end %>
   </td>
 </tr>
