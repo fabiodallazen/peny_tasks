@@ -1,0 +1,32 @@
+<div class="container py-3">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="h2 mb-0">
+      <i class="bi bi-card-text me-2"></i> <%= @task.title %>
+    </h1>
+    <div class="d-flex gap-2">
+      <%= link_to edit_task_path(@task), class: "btn btn-outline-primary" do %>
+        <i class="bi bi-pencil-fill me-1"></i> Edit
+      <% end %>
+      <%= link_to tasks_path, class: "btn btn-outline-secondary" do %>
+        <i class="bi bi-arrow-left-circle-fill me-1"></i> Back
+      <% end %>
+    </div>
+  </div>
+
+  <div class="card shadow-sm mb-3">
+    <div class="card-body">
+      <h6 class="text-muted">Status:</h6>
+      <span class="badge rounded-pill <%= @task.status == 'completed' ? 'bg-success' : 'bg-warning text-dark' %> py-2 px-3 mb-3 d-inline-block">
+        <i class="bi <%= @task.status == 'completed' ? 'bi-check-circle-fill' : 'bi-hourglass-split' %> me-1"></i>
+        <%= @task.status.capitalize %>
+      </span>
+
+      <hr>
+
+      <h6 class="text-muted">Description:</h6>
+      <div style="max-height: 300px; overflow-y: auto;">
+        <p class="mb-0"><%= @task.description.presence || "No description" %></p>
+      </div>
+    </div>
+  </div>
+</div>

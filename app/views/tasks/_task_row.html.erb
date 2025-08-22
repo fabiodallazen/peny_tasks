@@ -1,5 +1,8 @@
 <tr id="<%= dom_id(task) %>">
-  <td><%= task.title %></td>
+  <td>
+    <%= link_to task.title, task_path(task), class: "text-decoration-none text-primary" %>
+  </td>
+
   <td>
     <div class="dropdown">
       <a class="badge <%= task.status == 'completed' ? 'badge-completed' : 'badge-pending' %> dropdown-toggle text-decoration-none"

@@ -1,12 +1,14 @@
 # frozen_string_literal: false
 
 class TasksController < ApplicationController
-  before_action :set_task, only: %i[edit update destroy update_status]
+  before_action :set_task, only: %i[edit show update destroy update_status]
 
   def index
     tasks = Task.order(created_at: :desc)
     @tasks = TaskFilter.new(tasks, params).call.page(params[:page]).per(10)
   end
+
+  def show; end
 
   def new
     @task = Task.new
