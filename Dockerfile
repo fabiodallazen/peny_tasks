@@ -27,17 +27,21 @@ ENV RAILS_ENV=${RAILS_ENV:-production} \
 FROM base AS build
 
 COPY Gemfile Gemfile.lock ./
-
 RUN bundle install --jobs 4 --retry 3
+
+COPY package.json yarn.lock ./
+RUN npm install -g yarn && yarn install
 
 COPY . .
 
-RUN bundle exec bootsnap precompile --gemfile app/ lib/ || true
-
 # Precompile assets only in production
 RUN if [ "$RAILS_ENV" = "production" ]; then \
+      yarn build && \
       SECRET_KEY_BASE=dummy bundle exec rails assets:precompile; \
     fi
+
+# Bootsnap compilation
+RUN bundle exec bootsnap precompile --gemfile app/ lib/ || true
 
 # ----------------------
 # Final image
