@@ -1,41 +1,33 @@
 #!/bin/bash
 set -e
 
-# ----------------------
-# Dev environment setup
-# ----------------------
-if [ "$RAILS_ENV" = "development" ]; then
+if [ "$RAILS_ENV" = "production" ]; then
+  # --------------------------
+  # Production setup
+  # --------------------------
+  echo "==> Creating/migrating production database if needed..."
+  bundle exec rails db:create 2>/dev/null || true
+  bundle exec rails db:migrate 2>/dev/null || true
+else
+  # --------------------------
+  # Development / Test setup
+  # --------------------------
   echo "==> Installing gems..."
   bundle install
 
-  echo "==> Installing JS packages..."
-  npm install
-
-  echo "==> Running first JS build..."
-  npm run build
-
-  echo "==> Migrating development database..."
+  echo "==> Creating/migrating development database..."
   bundle exec rails db:create db:migrate 2>/dev/null || true
 
   echo "==> Preparing test database..."
   RAILS_ENV=test bundle exec rails db:drop db:create db:schema:load 2>/dev/null || true
 
-  # Run bin/dev if requested
-  if [ "$1" = "bin/dev" ]; then
+  if [ "$RAILS_ENV" = "development" ]; then
+    echo "==> Starting dev environment..."
     exec bin/dev
   fi
 fi
 
-# ----------------------
-# Production setup
-# ----------------------
-if [ "$RAILS_ENV" = "production" ]; then
-  echo "==> Creating/migrating production database if needed..."
-  bundle exec rails db:create 2>/dev/null || true
-  bundle exec rails db:migrate 2>/dev/null || true
-fi
-
-# ----------------------
+# --------------------------
 # Execute the main command
-# ----------------------
+# --------------------------
 exec "$@"

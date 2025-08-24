@@ -1,31 +1,28 @@
 #!/usr/bin/env sh
 export PORT="${PORT:-3000}"
 
-# ----------------------
-# Ensure builds folder exists
-# ----------------------
-mkdir -p app/assets/builds
+# Install JS dependencies
+echo "==> Installing JS packages..."
+npm install
 
-# ----------------------
-# First build (synchronous)
-# ----------------------
-echo "==> Running first JS build..."
+# Install JS dependencies
+echo "==> Resetting assets..."
+bin/rails assets:clobber || true
+
+# Run initial JS build
+echo "==> Running JS build..."
 npm run build
 
-# Verifica se o arquivo application.js foi criado
+# Verify build
 if [ ! -f app/assets/builds/application.js ]; then
   echo "ERROR: application.js not found after build"
   exit 1
 fi
 
-# ----------------------
-# Start esbuild in watch mode (background)
-# ----------------------
+# Start esbuild watch in background
 echo "==> Starting esbuild watch in background..."
 npm run build:watch &
 
-# ----------------------
 # Start Rails server
-# ----------------------
 echo "==> Starting Rails server..."
 exec bin/rails server -b 0.0.0.0 -p $PORT
