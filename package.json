@@ -11,7 +11,7 @@
     "lint": "eslint app/javascript --ext .js",
     "lint:fix": "eslint app/javascript --ext .js --fix",
     "build": "esbuild app/javascript/application.js --bundle --outdir=app/assets/builds --sourcemap --format=esm",
-    "build:watch": "esbuild app/javascript/application.js --bundle --outdir=app/assets/builds --sourcemap --watch --format=esm"
+    "build:watch": "esbuild app/javascript/application.js --bundle --outdir=app/assets/builds --sourcemap --watch --format=esm --watch=forever"
   },
   "repository": {
     "type": "git",

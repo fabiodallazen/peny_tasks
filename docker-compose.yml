@@ -16,6 +16,8 @@ services:
     environment:
       - DATABASE_URL=postgresql://peny:secret@db:5432/peny_tasks_development
       - RAILS_ENV=development
+      - BUNDLE_WITHOUT=""
+      - BUNDLE_PATH=/rails/vendor/bundle
     stdin_open: true
     tty: true
     entrypoint: ["sh", "/rails/entrypoint.sh"]
@@ -30,7 +32,6 @@ services:
       - "5432:5432"
     volumes:
       - db_data:/var/lib/postgresql/data
-#    restart: unless-stopped
 
 volumes:
   db_data:

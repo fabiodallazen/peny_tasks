@@ -2,13 +2,17 @@
 
 require_relative 'boot'
 require 'rails/all'
-require 'dotenv'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-Dotenv.load(".env.#{ENV.fetch('RAILS_ENV', nil)}", '.env')
+# Load environment variables from .env files only in development and test.
+# In production, we rely on real environment variables instead of Dotenv.
+if %w[development test].include?(Rails.env)
+  require 'dotenv'
+  Dotenv.load(".env.#{ENV.fetch('RAILS_ENV', nil)}", '.env')
+end
 
 module PenyTasks
   class Application < Rails::Application
