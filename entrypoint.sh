@@ -9,10 +9,10 @@ if [ "$RAILS_ENV" = "development" ]; then
   bundle install
 
   echo "==> Installing JS packages..."
-  yarn install
+  npm install
 
   echo "==> Running first JS build..."
-  yarn build
+  npm run build
 
   echo "==> Migrating development database..."
   bundle exec rails db:create db:migrate 2>/dev/null || true
