@@ -1,24 +1,6 @@
 #!/usr/bin/env sh
 export PORT="${PORT:-3000}"
 
-# Install JS dependencies
-echo "==> Installing JS packages..."
-npm install
-
-# Install JS dependencies
-echo "==> Resetting assets..."
-bin/rails assets:clobber || true
-
-# Run initial JS build
-echo "==> Running JS build..."
-npm run build
-
-# Verify build
-if [ ! -f app/assets/builds/application.js ]; then
-  echo "ERROR: application.js not found after build"
-  exit 1
-fi
-
 # Start esbuild watch in background
 echo "==> Starting esbuild watch in background..."
 npm run build:watch &
