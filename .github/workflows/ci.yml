@@ -69,8 +69,8 @@ jobs:
           ruby-version: .ruby-version
           bundler-cache: true
 
-      - name: Scan JS dependencies for vulnerabilities (Importmap)
-        run: bin/importmap audit
+      - name: Scan JS dependencies for vulnerabilities
+        run: npm audit --audit-level=moderate
 
   # --- Code Linting: JS (ESLint + Prettier) ---
   lint_js:
