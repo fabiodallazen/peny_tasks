@@ -15,7 +15,7 @@ if [ "$RAILS_ENV" = "development" ]; then
   yarn build
 
   echo "==> Migrating development database..."
-  bundle exec rails db:migrate 2>/dev/null || true
+  bundle exec rails db:create db:migrate 2>/dev/null || true
 
   echo "==> Preparing test database..."
   RAILS_ENV=test bundle exec rails db:drop db:create db:schema:load 2>/dev/null || true
@@ -26,5 +26,16 @@ if [ "$RAILS_ENV" = "development" ]; then
   fi
 fi
 
-# For production or other commands
+# ----------------------
+# Production setup
+# ----------------------
+if [ "$RAILS_ENV" = "production" ]; then
+  echo "==> Creating/migrating production database if needed..."
+  bundle exec rails db:create 2>/dev/null || true
+  bundle exec rails db:migrate 2>/dev/null || true
+fi
+
+# ----------------------
+# Execute the main command
+# ----------------------
 exec "$@"
