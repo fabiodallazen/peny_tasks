@@ -101,10 +101,28 @@ rails db:drop db:create db:migrate db:seed
 - Linters included: **RuboCop**, **ERB Lint**, **ESLint**
 - CI configured to run tests and linters on each push
 
-## Deployment
+## 🚀 Deployment
 
-- No production deployment has been done yet
-- App can be deployed via Docker or standard Rails hosting
+The app is now deployed in production using Docker on [Render](https://render.com).
+
+- **Live URL:** [https://peny-tasks-docker.onrender.com](https://peny-tasks-docker.onrender.com)
+- **Deployment method:** Docker container with entrypoint handling migrations and asset precompilation.
+
+### Notes for Future Deploys
+
+1. The `entrypoint.sh` script handles:
+    - Database creation and migrations
+    - Assets precompilation
+    - Bootsnap compilation
+    - JS packages installation (via `npm install` and `npm run build`)
+
+2. To update the app on Render:
+    - Push your changes to the main branch (or the branch linked to Render).
+    - Render automatically rebuilds the Docker container and deploys.
+
+3. For manual tasks in production (free tier limitations):
+    - Database migrations and seeds are automatically handled in `entrypoint.sh`.
+    - Avoid relying on pre-deploy commands, as shell access is not available in the free plan.
 
 ## AI Tools and Workflow Assistance
 
