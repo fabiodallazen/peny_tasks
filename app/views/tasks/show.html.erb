@@ -16,8 +16,8 @@
   <div class="card shadow-sm mb-3">
     <div class="card-body">
       <h6 class="text-muted">Status:</h6>
-      <span class="badge rounded-pill <%= @task.status == 'completed' ? 'bg-success' : 'bg-warning text-dark' %> py-2 px-3 mb-3 d-inline-block">
-        <i class="bi <%= @task.status == 'completed' ? 'bi-check-circle-fill' : 'bi-hourglass-split' %> me-1"></i>
+      <span class="badge rounded-pill <%= @task.status == 'completed' ? 'badge-completed' : 'badge-pending' %> py-2 px-3 mb-3 d-inline-block">
+        <i class="bi <%= @task.status == 'completed' ? 'bi bi-check-circle-fill me-1' : 'bi bi-hourglass-split me-1' %> me-1"></i>
         <%= @task.status.capitalize %>
       </span>
 
