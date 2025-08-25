@@ -19,7 +19,7 @@ group :development, :test do
   # --- Code quality / security ---
   gem 'brakeman', require: false # Security scanner
   gem 'erb_lint', '~> 0.9.0', require: false # ERB linter
-  gem 'rubocop', '~> 1.79', require: false # Ruby linter
+  gem 'rubocop', '~> 1.80', require: false # Ruby linter
   gem 'rubocop-factory_bot', '~> 2.27', require: false # FactoryBot-specific cops
   gem 'rubocop-rails', '~> 2.32', require: false # Rails-specific cops
   gem 'rubocop-rspec', '~> 3.6', require: false # RSpec-specific cops
