@@ -56,18 +56,20 @@ jobs:
       - name: Lint ERB views
         run: bundle exec erblint app/views
 
-  # --- JavaScript Security Scan (Importmap) ---
+  # --- JavaScript Security Scan ---
   scan_js:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
 
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
+      - name: Set up Node
+        uses: actions/setup-node@v4
         with:
-          ruby-version: .ruby-version
-          bundler-cache: true
+          node-version: 24.3.0
+
+      - name: Install Node dependencies
+        run: npm ci
 
       - name: Scan JS dependencies for vulnerabilities
         run: npm audit --audit-level=moderate
@@ -108,11 +110,22 @@ jobs:
           --health-retries=3
 
     steps:
-      - name: Install system dependencies
-        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y libjemalloc2 libvips postgresql-client
-
       - name: Checkout code
         uses: actions/checkout@v5
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.3.0
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Build JS assets
+        run: npm run build
+
+      - name: Install system dependencies
+        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y libjemalloc2 libvips postgresql-client
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
